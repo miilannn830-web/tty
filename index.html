@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TikTok Clone</title>
+    <meta
+      name="description"
+      content="A polished TikTok-inspired video feed with 100 videos and fully interactive buttons."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=3" />
+  </head>
+  <body>
+    <canvas class="shader-canvas" id="shader-canvas" aria-hidden="true"></canvas>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark" aria-label="TikTok logo">♪</div>
+          <span class="brand-name">TikTok</span>
+        </div>
+
+        <nav class="top-actions" aria-label="Top actions">
+          <button class="icon-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 015.874 12.744l4.35 4.35 1.414-1.414-4.35-4.35A7.5 7.5 0 1110.5 3zm0 2a5.5 5.5 0 104.032 9.393A5.5 5.5 0 0010.5 5z"/></svg>
+          </button>
+          <button class="icon-btn ai-mobile-link" type="button" data-page="AI Chat" aria-label="Open AI chat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2zm7 13l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg>
+          </button>
+          <button class="icon-btn" aria-label="Inbox">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 016.5 4h11A2.5 2.5 0 0120 6.5v11A2.5 2.5 0 0117.5 20h-11A2.5 2.5 0 014 17.5v-11zm2 0v11h12v-11H6zm2.25 2.75h7.5v1.5h-7.5v-1.5zm0 3h7.5v1.5h-7.5v-1.5z"/></svg>
+          </button>
+        </nav>
+      </header>
+
+      <aside class="desktop-rail" aria-label="Explore">
+        <p class="rail-label">YOUR SPACE</p>
+        <button class="nav-item desktop-nav active" type="button" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg><span>For you</span>
+        </button>
+        <button class="nav-item desktop-nav" type="button" aria-label="Friends">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3 3 0 110-6 3 3 0 010 6zm8 0a3 3 0 110-6 3 3 0 010 6zM2 19a5 5 0 015-5h2a5 5 0 015 5v1H2v-1zm12 1v-1a6.9 6.9 0 00-1.5-4.3A5 5 0 0115 14h2a5 5 0 015 5v1h-8z"/></svg><span>Following</span>
+        </button>
+        <button class="nav-item desktop-nav" type="button" aria-label="Create post">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Create</span>
+        </button>
+        <button class="nav-item desktop-nav" type="button" aria-label="Inbox">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 13h4l2 3h4l2-3h4"/></svg><span>Inbox</span>
+        </button>
+        <button class="nav-item desktop-nav" type="button" aria-label="AI Chat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l1.6 6.4L20 10l-6.4 1.6L12 18l-1.6-6.4L4 10l6.4-1.6L12 2zm7 13l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg><span>AI Studio</span>
+        </button>
+        <button class="nav-item desktop-nav" type="button" aria-label="Profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm-8 9a8 8 0 0116 0H4z"/></svg><span>Profile</span>
+        </button>
+        <div class="rail-profile">
+          <span class="rail-avatar">L</span>
+          <span><strong>luna.studio</strong><small>Creator account</small></span>
+          <span class="online-dot" aria-label="Online"></span>
+        </div>
+      </aside>
+
+      <main class="feed" id="feed" aria-live="polite"></main>
+      <main class="page-view" id="page-view" aria-live="polite"></main>
+
+      <aside class="discovery-rail" aria-label="Discover">
+        <div class="discover-heading"><span class="live-mark"></span><span>THE DAILY MIX</span></div>
+        <h2>Little moments.<br />Big energy.</h2>
+        <p class="discover-copy">A fresh cut of people, places, and things worth a pause.</p>
+        <div class="trend-list">
+          <div class="trend-row"><span class="trend-index">01</span><span><strong>Sunday reset</strong><small>12.4K posts</small></span><span class="trend-arrow">↗</span></div>
+          <div class="trend-row"><span class="trend-index">02</span><span><strong>On my way</strong><small>8,920 posts</small></span><span class="trend-arrow">↗</span></div>
+          <div class="trend-row"><span class="trend-index">03</span><span><strong>Kitchen radio</strong><small>6,180 posts</small></span><span class="trend-arrow">↗</span></div>
+        </div>
+        <div class="shader-status"><span class="shader-dot"></span> AMBIENT SHADER <span class="shader-status-value">LIVE</span></div>
+      </aside>
+
+      <nav class="bottom-nav" aria-label="Primary navigation">
+        <button class="nav-item active" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-item" aria-label="Friends">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11a3 3 0 110-6 3 3 0 010 6zm8 0a3 3 0 110-6 3 3 0 010 6zM3 18a5 5 0 015-5h1a4 4 0 013.8 2.72A5.97 5.97 0 0112 17a5.97 5.97 0 01-2.2-1.28A4 4 0 016.8 13H6a5 5 0 00-5 5zm18 0a5 5 0 00-5-5h-1a4 4 0 00-3.8 2.72A5.97 5.97 0 0112 17a5.97 5.97 0 012.2-1.28A4 4 0 0117.2 13H18a5 5 0 015 5z"/></svg>
+          <span>Friends</span>
+        </button>
+        <button class="nav-item create-btn" aria-label="Create post">
+          <span class="plus">＋</span>
+        </button>
+        <button class="nav-item" aria-label="Inbox">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h12a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2zm0 3.5l6 4 6-4"/></svg>
+          <span>Inbox</span>
+        </button>
+        <button class="nav-item" aria-label="Profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 015 5v1a5 5 0 01-10 0V7a5 5 0 015-5zm-7 17a7 7 0 0114 0v1H5v-1z"/></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+    </div>
+
+    <aside class="comment-drawer" id="comment-drawer" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <p class="drawer-kicker">Comments</p>
+          <h2 id="drawer-title">@user</h2>
+        </div>
+        <button class="close-drawer" id="close-drawer" aria-label="Close comments">✕</button>
+      </div>
+
+      <div class="comments-list" id="comments-list"></div>
+
+      <form class="comment-form" id="comment-form">
+        <input id="comment-input" type="text" maxlength="180" placeholder="Add a comment..." aria-label="Add a comment" />
+        <button type="submit">Post</button>
+      </form>
+    </aside>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <script src="script.js?v=3"></script>
+  </body>
+</html>
